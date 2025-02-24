@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patients', function (Blueprint $table) {
+            // condições, alergias, responsavel_medico
             $table->id();
             $table->string("name");
+            // need take to model and controller
+            $table->string("cpf", 11);
+            $table->date("birth");
+            $table->string("emergency_contact");
             $table->timestamps();
         });
     }
