@@ -20,6 +20,8 @@ class PatientFactory extends Factory
             'name' => $this->faker->name(),
             'cpf' => self::generateFakeCpf(), 
             'birth' => $this->faker->date(),
+            'condition'=>self::randomCondition(),
+            'allergy'=>self::randomAllergy(),
             'emergency_contact' => $this->faker->phoneNumber(),
             'medical_officer' => $this->faker->name(),
         ];
@@ -66,4 +68,26 @@ class PatientFactory extends Factory
     {
         return round($dividend - (floor($dividend / $divider) * $divider));
     }
+
+    /**
+     * Generate random condition for patient
+     */
+    public function randomCondition(){
+
+        $condition = array("Diabetes","Arterial hypertension","Asthma", "COPD", "Heart failure", "Chronic kidney disease", "Rheumatoid arthritis", "Osteoporosis");
+
+        return $condition[array_rand($condition)];
+    }
+
+    /**
+     * Generate random allergy for patient
+     */
+    public function randomAllergy(){
+        
+        $allergy = array("Pollen allergy","Dust mite allergy","Seafood allergy","Peanut allergy","penicillin, AAS","Insect bite allergy");
+
+        return $allergy[array_rand($allergy)];
+    }
+
+
 }
