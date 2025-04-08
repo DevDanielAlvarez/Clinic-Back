@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Responsible;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,12 +19,13 @@ class PatientFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cpf' => self::generateFakeCpf(), 
+            'cpf' => self::generateFakeCpf(),
             'birth' => $this->faker->date(),
-            'condition'=>self::randomCondition(),
-            'allergy'=>self::randomAllergy(),
+            'condition' => self::randomCondition(),
+            'allergy' => self::randomAllergy(),
             'emergency_contact' => $this->faker->phoneNumber(),
             'medical_officer' => $this->faker->name(),
+            'responsible_id' => Responsible::inRandomOrder()->first()->id
         ];
     }
 
@@ -51,12 +53,34 @@ class PatientFactory extends Factory
         $d2 = ($d2 >= 10) ? 0 : $d2;
 
         if ($mask == "1") {
-            return sprintf('%d%d%d.%d%d%d.%d%d%d-%d%d', 
-                $n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $d1, $d2
+            return sprintf(
+                '%d%d%d.%d%d%d.%d%d%d-%d%d',
+                $n1,
+                $n2,
+                $n3,
+                $n4,
+                $n5,
+                $n6,
+                $n7,
+                $n8,
+                $n9,
+                $d1,
+                $d2
             );
         } else {
-            return sprintf('%d%d%d%d%d%d%d%d%d%d%d', 
-                $n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $d1, $d2
+            return sprintf(
+                '%d%d%d%d%d%d%d%d%d%d%d',
+                $n1,
+                $n2,
+                $n3,
+                $n4,
+                $n5,
+                $n6,
+                $n7,
+                $n8,
+                $n9,
+                $d1,
+                $d2
             );
         }
     }
@@ -72,9 +96,10 @@ class PatientFactory extends Factory
     /**
      * Generate random condition for patient
      */
-    public function randomCondition(){
+    public function randomCondition()
+    {
 
-        $condition = array("Diabetes","Arterial hypertension","Asthma", "COPD", "Heart failure", "Chronic kidney disease", "Rheumatoid arthritis", "Osteoporosis");
+        $condition = array("Diabetes", "Arterial hypertension", "Asthma", "COPD", "Heart failure", "Chronic kidney disease", "Rheumatoid arthritis", "Osteoporosis");
 
         return $condition[array_rand($condition)];
     }
@@ -82,12 +107,11 @@ class PatientFactory extends Factory
     /**
      * Generate random allergy for patient
      */
-    public function randomAllergy(){
-        
-        $allergy = array("Pollen allergy","Dust mite allergy","Seafood allergy","Peanut allergy","penicillin, AAS","Insect bite allergy");
+    public function randomAllergy()
+    {
+
+        $allergy = array("Pollen allergy", "Dust mite allergy", "Seafood allergy", "Peanut allergy", "penicillin, AAS", "Insect bite allergy");
 
         return $allergy[array_rand($allergy)];
     }
-
-
 }
